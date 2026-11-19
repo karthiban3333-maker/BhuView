@@ -1,0 +1,7 @@
+services:
+  api:
+    build: ./backend
+    environment:
+      JWT_SECRET: ${JWT_SECRET:-change-me}
+      DATA_PROVIDER: ${DATA_PROVIDER:-mock}
+    ports: ["8000:8000"]
