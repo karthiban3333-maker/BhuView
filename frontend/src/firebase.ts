@@ -1,36 +1,38 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { 
-  getAuth, 
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword, 
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   signOut,
   RecaptchaVerifier,
   signInWithPhoneNumber,
   type ConfirmationResult,
   type UserCredential
 } from 'firebase/auth';
-import { 
-  getFirestore, 
-  collection, 
-  doc, 
-  getDoc, 
-  setDoc, 
-  getDocs, 
-  addDoc, 
-  query, 
+import {
+  getFirestore,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  getDocs,
+  addDoc,
+  query,
   where,
   orderBy,
-  onSnapshot 
+  onSnapshot
 } from 'firebase/firestore';
 
+const env = (import.meta as unknown as { env?: Record<string, string> }).env || {};
+
 export const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "landstack-e01f4.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "landstack-e01f4",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "landstack-e01f4.firebasestorage.app",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "266058167659",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:266058167659:web:55935532bc49483edb882e",
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-SG9ZNG0GFH"
+  apiKey: env.VITE_FIREBASE_API_KEY || "AIzaSyFakeKeyPlaceholderForBuild",
+  authDomain: env.VITE_FIREBASE_AUTH_DOMAIN || "landstack-e01f4.firebaseapp.com",
+  projectId: env.VITE_FIREBASE_PROJECT_ID || "landstack-e01f4",
+  storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET || "landstack-e01f4.firebasestorage.app",
+  messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID || "266058167659",
+  appId: env.VITE_FIREBASE_APP_ID || "1:266058167659:web:55935532bc49483edb882e",
+  measurementId: env.VITE_FIREBASE_MEASUREMENT_ID || "G-SG9ZNG0GFH"
 };
 
 // Initialize Firebase
@@ -51,7 +53,7 @@ export type UserProfile = {
 export async function firebaseSignUp(email: string, password: string, name: string, role: string, phone: string = ''): Promise<UserProfile> {
   const credential: UserCredential = await createUserWithEmailAndPassword(auth, email, password);
   const user = credential.user;
-  
+
   const profile: UserProfile = {
     uid: user.uid,
     email: user.email || email,
@@ -68,12 +70,12 @@ export async function firebaseSignUp(email: string, password: string, name: stri
 export async function firebaseLogin(email: string, password: string): Promise<UserProfile> {
   const credential = await signInWithEmailAndPassword(auth, email, password);
   const user = credential.user;
-  
+
   const userDoc = await getDoc(doc(db, 'users', user.uid));
   if (userDoc.exists()) {
     return userDoc.data() as UserProfile;
   }
-  
+
   // Default fallback profile if not found in Firestore
   const fallbackProfile: UserProfile = {
     uid: user.uid,
@@ -116,12 +118,12 @@ export async function sendPhoneVerification(phoneNumber: string, appVerifier: Re
 export async function verifyPhoneCode(confirmationResult: ConfirmationResult, code: string): Promise<UserProfile> {
   const credential = await confirmationResult.confirm(code);
   const user = credential.user;
-  
+
   const userDoc = await getDoc(doc(db, 'users', user.uid));
   if (userDoc.exists()) {
     return userDoc.data() as UserProfile;
   }
-  
+
   const profile: UserProfile = {
     uid: user.uid,
     email: user.email || `${user.phoneNumber}@demo.gov`,
