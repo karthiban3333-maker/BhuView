@@ -150,7 +150,7 @@ export async function fetchParcelsFromFirestore(): Promise<Array<Record<string, 
   try {
     const querySnapshot = await getDocs(collection(db, 'parcels'));
     const list: Array<Record<string, unknown>> = [];
-    querySnapshot.forEach((doc) => {
+    querySnapshot.forEach((doc: any) => {
       list.push(doc.data());
     });
     return list;
@@ -169,7 +169,7 @@ export async function fetchServiceRequestsFromFirestore(): Promise<Array<Record<
   try {
     const querySnapshot = await getDocs(collection(db, 'service_requests'));
     const list: Array<Record<string, unknown>> = [];
-    querySnapshot.forEach((doc) => {
+    querySnapshot.forEach((doc: any) => {
       list.push(doc.data());
     });
     return list;
