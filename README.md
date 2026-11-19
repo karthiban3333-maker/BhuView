@@ -6,6 +6,22 @@ BhuView connects synthetic Record of Rights (RoR), land ownership, registration,
 
 ---
 
+## 📖 About the Project
+
+### 🎯 Problem Statement
+Land records and municipal property administration in many jurisdictions are deeply fragmented across disconnected departments — revenue, registration, urban planning, survey, and utilities operate in isolated data silos. This fragmentation creates title ambiguity, encourages boundary disputes, fosters fraudulent encumbrances, and forces citizens to navigate lengthy, opaque bureaucratic processes.
+
+### 💡 The Solution
+BhuView introduces a unified Digital Public Infrastructure (DPI) model centered on the "Parcel 360" identity. Every plot of land is linked to a single verifiable digital parcel identifier that consolidates legal deeds, physical spatial boundaries (3D GIS), planning zones, taxation history, and utility encumbrances. Using interactive MapLibre GL mapping, automated document OCR, and React Flow visual governance graphs, all relevant departments review and approve citizen requests on a shared, transparent audit trail.
+
+### 🌟 Core Value Proposition
+- **Unified Parcel 360 Architecture**: Consolidates legal title, spatial geometry, revenue records, and encumbrances into one authoritative parcel view.
+- **Explainable AI Area Verification**: Detects spatial discrepancies and boundary disputes between registered deed documents and digitized cadastral maps.
+- **Transparent Multi-Agency Governance**: Real-time cross-department workflow pipeline with granular 8-role permission controls.
+- **Interactive 3D Cadastral GIS**: Hardware-accelerated 3D polygon mapping with risk overlays, extrusions, and pitch/bearing camera controls.
+
+---
+
 ## ✨ Features
 
 - 🗺️ **3D Interactive GIS Cadastral Map** — High-performance geospatial visualization powered by MapLibre GL with 3D polygon extrusions, pitch/bearing controls, and risk-coded parcels.
